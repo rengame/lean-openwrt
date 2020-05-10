@@ -1,0 +1,24 @@
+# Put your custom commands here that should be executed once
+# the system init finished. By default this file does nothing.
+
+ipset creat gfwlist hash:ip
+ipset creat gfw-tg hash:net
+
+ipset add gfw-tg 91.108.4.0/22
+ipset add gfw-tg 91.108.8.0/22
+ipset add gfw-tg 91.108.12.0/22
+ipset add gfw-tg 91.108.20.0/22
+ipset add gfw-tg 91.108.36.0/23
+ipset add gfw-tg 91.108.38.0/23
+ipset add gfw-tg 91.108.56.0/22
+ipset add gfw-tg 149.154.160.0/20
+ipset add gfw-tg 149.154.164.0/22
+ipset add gfw-tg 149.154.172.0/22
+
+cp /root/gfwlist.conf /tmp/dnsmasq.d/
+/etc/init.d/dnsmasq restart
+
+route add -net 192.168.100.0/32 dev eth1
+route add -net 192.168.0.0/16 gw 10.8.6.24
+route add -net 10.254.0.0/16 gw 10.8.6.24
+exit 0

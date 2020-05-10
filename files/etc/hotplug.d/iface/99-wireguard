@@ -1,0 +1,8 @@
+#!/bin/sh
+
+[ ifup = "$ACTION" -a "$INTERFACE" = wireguard ] && {
+        ip route add default via 10.8.5.1 table 101
+        ip route add 8.8.8.8 via 10.8.5.1
+        ip rule add from all fwmark 0x3 lookup 101 prio 750
+}
+
